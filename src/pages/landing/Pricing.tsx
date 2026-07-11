@@ -5,7 +5,7 @@ const basicFeatures = [
   'Gestão financeira básica',
 ]
 const proFeatures = [
-  ...basicFeatures,
+  'Tudo do Basic +',
   'Relatórios avançados',
   'Integração com Stripe',
   'Comunicação via WhatsApp',
@@ -27,7 +27,7 @@ export default function Pricing() {
 
         <div className="mt-14 grid gap-6 lg:grid-cols-2">
           <div className="flex h-full flex-col rounded-[32px] border border-slate-800 bg-slate-900 p-8 shadow-sm">
-            <span className="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">
+            <span className="inline-flex rounded-full bg-slate-800 px-3 py-1 text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">
               Basic
             </span>
             <p className="mt-8 text-4xl font-semibold text-white">R$ 99,99 / mês</p>
@@ -53,7 +53,7 @@ export default function Pricing() {
 
           <div className="rounded-[32px] border border-slate-800 bg-slate-900 p-1 shadow-[0_24px_90px_rgba(0,0,0,0.35)]">
             <div className="flex h-full flex-col rounded-[30px] bg-slate-950 p-8">
-              <span className="inline-flex rounded-full bg-purple-600/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-purple-300">
+              <span className="inline-flex rounded-full bg-purple-600/10 px-3 py-1 text-sm font-semibold uppercase tracking-[0.24em] text-purple-300">
                 Pro
               </span>
               <p className="mt-8 text-4xl font-semibold text-white">R$ 119,99 / mês</p>

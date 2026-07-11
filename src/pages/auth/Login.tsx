@@ -3,9 +3,6 @@ export default function Login() {
     <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md rounded-[32px] bg-slate-900/95 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-3xl bg-purple-600 text-xl font-bold text-white">
-            OP
-          </div>
           <p className="text-sm uppercase tracking-[0.35em] text-purple-300">OficinaPro</p>
           <h1 className="mt-4 text-3xl font-semibold tracking-tight text-white">
             Acesse sua oficina
