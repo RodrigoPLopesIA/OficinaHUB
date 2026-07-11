@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Login() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center px-6 py-12">
@@ -33,12 +35,12 @@ export default function Login() {
           </button>
 
           <div className="flex items-center justify-between text-sm text-slate-400">
-            <a href="#" className="transition hover:text-purple-300">
+            <Link to="/forgot-password" className="transition hover:text-purple-300">
               Esqueci a senha
-            </a>
-            <a href="#" className="font-semibold text-white transition hover:text-purple-300">
+            </Link>
+            <Link to="/register" className="font-semibold text-white transition hover:text-purple-300">
               Cadastrar-se
-            </a>
+            </Link>
           </div>
         </form>
       </div>
