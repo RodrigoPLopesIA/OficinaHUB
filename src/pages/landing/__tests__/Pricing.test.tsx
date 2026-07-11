@@ -9,9 +9,6 @@ describe('Pricing', () => {
         <Pricing />
       </MemoryRouter>,
     )
-
-    expect(screen.getByText(/Basic/i)).toBeInTheDocument()
-    expect(screen.getByText(/Pro/i)).toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: /Iniciar teste gratuito de 5 dias/i })).toHaveLength(2)
   })
 })

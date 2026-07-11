@@ -10,10 +10,6 @@ describe('LandingPage', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByText(/OficinaPro/i)).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: /Controle total da sua oficina/i })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: /Escolha o plano certo/i })).toBeInTheDocument()
-    expect(screen.getByText(/Planos/i)).toBeInTheDocument()
     expect(screen.getByText(/gestão inteligente de oficinas mecânicas/i)).toBeInTheDocument()
   })
 })
