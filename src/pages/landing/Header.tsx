@@ -14,13 +14,13 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <a
-            href="#pricing"
+            href="#login"
             className="rounded-2xl border border-slate-800 bg-slate-900 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-600 hover:bg-slate-800"
           >
             Cadastrar
           </a>
           <a
-            href="#pricing"
+            href="#login"
             className="rounded-2xl bg-purple-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-purple-500"
           >
             Iniciar teste gratuito de 5 dias

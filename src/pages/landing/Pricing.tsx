@@ -42,9 +42,12 @@ export default function Pricing() {
               ))}
             </ul>
             <div className="mt-auto">
-              <button className="inline-flex w-full items-center justify-center rounded-2xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-500">
+              <a
+                href="#login"
+                className="inline-flex w-full items-center justify-center rounded-2xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-500"
+              >
                 Iniciar teste gratuito de 5 dias
-              </button>
+              </a>
             </div>
           </div>
 
@@ -65,9 +68,12 @@ export default function Pricing() {
                 ))}
               </ul>
               <div className="mt-auto">
-                <button className="inline-flex w-full items-center justify-center rounded-2xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-500">
+                <a
+                  href="#login"
+                  className="inline-flex w-full items-center justify-center rounded-2xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-500"
+                >
                   Iniciar teste gratuito de 5 dias
-                </button>
+                </a>
               </div>
             </div>
           </div>

@@ -16,12 +16,18 @@ export default function Hero() {
             </p>
           </div>
           <div className="flex flex-wrap gap-4">
-            <button className="inline-flex items-center justify-center rounded-2xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-500">
+            <a
+              href="#login"
+              className="inline-flex items-center justify-center rounded-2xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-500"
+            >
               Começar grátis
-            </button>
-            <button className="inline-flex items-center justify-center rounded-2xl border border-slate-700 bg-slate-900 px-6 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500">
+            </a>
+            <a
+              href="#pricing"
+              className="inline-flex items-center justify-center rounded-2xl border border-slate-700 bg-slate-900 px-6 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500"
+            >
               Ver planos
-            </button>
+            </a>
           </div>
         </div>
 
