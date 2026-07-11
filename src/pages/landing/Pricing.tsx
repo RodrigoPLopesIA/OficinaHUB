@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const basicFeatures = [
   'Cadastro de clientes e veículos',
   'Ordens de serviço e histórico',
@@ -42,12 +44,12 @@ export default function Pricing() {
               ))}
             </ul>
             <div className="mt-auto">
-              <a
-                href="#login"
+              <Link
+                to="/login"
                 className="inline-flex w-full items-center justify-center rounded-2xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-500"
               >
                 Iniciar teste gratuito de 5 dias
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -68,12 +70,12 @@ export default function Pricing() {
                 ))}
               </ul>
               <div className="mt-auto">
-                <a
-                  href="#login"
+                <Link
+                  to="/login"
                   className="inline-flex w-full items-center justify-center rounded-2xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-500"
                 >
                   Iniciar teste gratuito de 5 dias
-                </a>
+                </Link>
               </div>
             </div>
           </div>

@@ -1,22 +1,16 @@
-import { useEffect, useState } from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import LandingPage from './pages/landing'
 import Login from './pages/auth/Login'
 
 function App() {
-  const [view, setView] = useState<'landing' | 'login'>(() =>
-    window.location.hash === '#login' ? 'login' : 'landing',
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   )
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      setView(window.location.hash === '#login' ? 'login' : 'landing')
-    }
-
-    window.addEventListener('hashchange', handleHashChange)
-    return () => window.removeEventListener('hashchange', handleHashChange)
-  }, [])
-
-  return view === 'login' ? <Login /> : <LandingPage />
 }
 
 export default App
