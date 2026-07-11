@@ -8,7 +8,7 @@ import Pricing from './Pricing'
 
 export default function LandingPage() {
   return (
-    <main className="bg-[#f7f6fb] text-slate-950">
+    <main className="bg-slate-950 text-slate-100">
       <Header />
       <Hero />
       <Benefits />
