@@ -14,7 +14,7 @@ const proFeatures = [
 
 export default function Pricing() {
   return (
-    <section className="bg-slate-50">
+    <section className="bg-slate-50" id="pricing">
       <div className="mx-auto max-w-[1126px] px-6 py-20">
         <div className="mx-auto max-w-3xl text-center">
           <p className="inline-flex rounded-full bg-purple-100 px-4 py-1 text-sm font-semibold uppercase tracking-[0.3em] text-purple-700">
@@ -26,11 +26,11 @@ export default function Pricing() {
         </div>
 
         <div className="mt-14 grid gap-6 lg:grid-cols-2">
-          <div className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm">
+          <div className="flex h-full flex-col rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm">
             <span className="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-slate-600">
               Basic
             </span>
-            <p className="mt-8 text-4xl font-semibold text-slate-950">R$ 149 / mês</p>
+            <p className="mt-8 text-4xl font-semibold text-slate-950">R$ 99,99 / mês</p>
             <p className="mt-4 text-slate-600 leading-7">
               Essencial para controlar sua oficina com eficiência.
             </p>
@@ -41,30 +41,34 @@ export default function Pricing() {
                 </li>
               ))}
             </ul>
-            <button className="mt-10 inline-flex w-full items-center justify-center rounded-2xl bg-purple-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-800">
-              Assinar Basic
-            </button>
+            <div className="mt-auto">
+              <button className="inline-flex w-full items-center justify-center rounded-2xl bg-purple-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-800">
+                Iniciar teste gratuito de 5 dias
+              </button>
+            </div>
           </div>
 
           <div className="rounded-[32px] border border-transparent bg-gradient-to-b from-purple-50 to-white p-1 shadow-[0_24px_90px_rgba(125,76,255,0.14)]">
-            <div className="h-full rounded-[30px] bg-white p-8">
+            <div className="flex h-full flex-col rounded-[30px] bg-white p-8">
               <span className="inline-flex rounded-full bg-purple-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-purple-700">
                 Pro
               </span>
-              <p className="mt-8 text-4xl font-semibold text-slate-950">R$ 249 / mês</p>
+              <p className="mt-8 text-4xl font-semibold text-slate-950">R$ 119,99 / mês</p>
               <p className="mt-4 text-slate-600 leading-7">
                 Para oficinas que querem automação, integrações e crescimento.
               </p>
-              <ul className="mt-8 space-y-3 text-slate-700">
+              <ul className="mt-8 mb-4 space-y-3 text-slate-700">
                 {proFeatures.map((feature) => (
                   <li key={feature} className="list-disc pl-5 leading-7">
                     {feature}
                   </li>
                 ))}
               </ul>
-              <button className="mt-10 inline-flex w-full items-center justify-center rounded-2xl border border-purple-700 bg-white px-6 py-3 text-sm font-semibold text-purple-700 transition hover:bg-purple-50">
-                Assinar Pro
-              </button>
+              <div className="mt-auto">
+                <button className="inline-flex w-full items-center justify-center rounded-2xl bg-purple-700 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-800">
+                  Iniciar teste gratuito de 5 dias
+                </button>
+              </div>
             </div>
           </div>
         </div>
