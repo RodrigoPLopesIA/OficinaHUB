@@ -1,6 +1,6 @@
 import type React from 'react'
+import { useAuth } from '@clerk/react'
 import { Navigate } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
 
 interface PrivateRouteProps {
   children: React.ReactNode
@@ -8,9 +8,14 @@ interface PrivateRouteProps {
 }
 
 export function PrivateRoute({ children, requiredRoles }: PrivateRouteProps) {
-  const { isAuthenticated, isLoading, hasRole } = useAuth()
+  const { isLoaded, isSignedIn, sessionClaims } = useAuth()
 
-  if (isLoading) {
+  const roles = Array.isArray((sessionClaims as Record<string, unknown> | undefined)?.roles)
+    ? ((sessionClaims as Record<string, unknown>).roles as string[])
+    : []
+  const hasRole = (role: string) => roles.includes(role)
+
+  if (!isLoaded) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-950">
         <div className="text-center">
@@ -21,8 +26,8 @@ export function PrivateRoute({ children, requiredRoles }: PrivateRouteProps) {
     )
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to="/" replace />
+  if (!isSignedIn) {
+    return <Navigate to="/login" replace />
   }
 
   if (requiredRoles && !requiredRoles.some((role) => hasRole(role))) {

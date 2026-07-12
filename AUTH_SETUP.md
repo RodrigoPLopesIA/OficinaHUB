@@ -1,232 +1,46 @@
-# Sistema de Autenticação com Keycloak
+# Sistema de Autenticacao com Clerk
 
-Este projeto utiliza Keycloak para autenticação e autorização. O sistema inclui um hook `useAuth` completo e um contexto de autenticação.
+Este projeto usa Clerk para autenticacao e autorizacao da aplicacao React (Vite).
 
-## 📦 Dependências Instaladas
+## Dependencia principal
 
-- `keycloak-js`: ^26.2.4
-- `@react-keycloak/web`: ^3.4.0
+- @clerk/react
 
-## 🔧 Configuração
+## Variaveis de ambiente necessarias
 
-### 1. Variáveis de Ambiente
+Defina em `.env.local`:
 
-Crie um arquivo `.env` baseado em `.env.example`:
+- VITE_CLERK_PUBLISHABLE_KEY
 
-```bash
-cp .env.example .env
-```
+Importante:
 
-Configure as variáveis do Keycloak:
+- Nao exponha `CLERK_SECRET_KEY` em codigo cliente.
+- Em frontend Vite, use apenas `VITE_` para variaveis acessadas no browser.
 
-```env
-VITE_KEYCLOAK_URL=http://localhost:8080
-VITE_KEYCLOAK_REALM=seu-realm
-VITE_KEYCLOAK_CLIENT_ID=seu-client-id
-```
+## Estrutura principal de autenticacao
 
-### 2. Estrutura do Projeto
+- `src/main.tsx`: inicializa `ClerkProvider`.
+- `src/pages/auth/Login.tsx`: tela de sign in com `SignIn`.
+- `src/pages/auth/SignUpPage.tsx`: tela de sign up com `SignUp`.
+- `src/components/PrivateRoute.tsx`: protege rotas usando `useAuth`.
+- `src/pages/landing/Header.tsx`: exibe controles de auth visiveis (sign in/sign up ou user controls quando logado).
 
-```
-src/
-├── config/
-│   └── keycloak.ts          # Configuração centralizada do Keycloak
-├── contexts/
-│   └── AuthContext.tsx      # Contexto de autenticação
-├── hooks/
-│   └── useAuth.ts           # Hook para usar a autenticação
-├── components/
-│   └── PrivateRoute.tsx     # Componente para rotas protegidas
-└── pages/
-    └── auth/
-        └── Login.tsx        # Página de login
-```
+## Fluxo da aplicacao
 
-## 🎯 Como Usar
+1. Usuario deslogado acessa `/` e ve controles de cadastro/login.
+2. Login em `/login` ou cadastro em `/sign-up` via Clerk.
+3. Apos autenticar, redirecionamento para `/dashboard`.
+4. Rotas protegidas exigem sessao ativa.
 
-### Hook `useAuth()`
+## Validacao recomendada
 
-O hook `useAuth()` fornece acesso a todas as funções de autenticação:
+1. `clerk doctor`
+2. `yarn build`
+3. `yarn test --run`
+4. `yarn dev`
 
-```tsx
-import { useAuth } from '../hooks/useAuth'
+## Referencias
 
-function MyComponent() {
-  const {
-    user,                    // Usuário atual (User | null)
-    isAuthenticated,         // Se o usuário está autenticado (boolean)
-    isLoading,              // Se está carregando (boolean)
-    error,                  // Mensagem de erro (string | null)
-    login,                  // Função de login
-    logout,                 // Função de logout
-    register,               // Função de registro
-    refreshToken,           // Função para renovar token
-    hasRole,                // Função para verificar role
-    hasRealmRole,           // Função para verificar realm role
-  } = useAuth()
-
-  return (
-    <div>
-      {isAuthenticated ? (
-        <>
-          <p>Bem-vindo, {user?.username}!</p>
-          <button onClick={() => logout()}>Sair</button>
-        </>
-      ) : (
-        <p>Faça login para continuar</p>
-      )}
-    </div>
-  )
-}
-```
-
-### Verificar Roles
-
-```tsx
-function AdminPanel() {
-  const { hasRole } = useAuth()
-
-  if (!hasRole('admin')) {
-    return <div>Acesso Negado</div>
-  }
-
-  return <div>Painel do Admin</div>
-}
-```
-
-### Rotas Protegidas
-
-```tsx
-import { PrivateRoute } from './components/PrivateRoute'
-import Dashboard from './pages/Dashboard'
-
-<Routes>
-  <Route
-    path="/dashboard"
-    element={
-      <PrivateRoute requiredRoles={['user']}>
-        <Dashboard />
-      </PrivateRoute>
-    }
-  />
-</Routes>
-```
-
-### Acessar Dados do Usuário
-
-```tsx
-function Profile() {
-  const { user } = useAuth()
-
-  return (
-    <div>
-      <h1>{user?.firstName} {user?.lastName}</h1>
-      <p>Email: {user?.email}</p>
-      <p>Roles: {user?.roles.join(', ')}</p>
-    </div>
-  )
-}
-```
-
-## 📋 Interface `User`
-
-```typescript
-interface User {
-  id: string
-  username: string
-  email: string
-  firstName?: string
-  lastName?: string
-  roles: string[]              // Client roles
-  realmRoles?: string[]        // Realm roles
-}
-```
-
-## 🔐 Funções de Autenticação
-
-### `login(username: string, password: string): Promise<void>`
-
-Realiza o login do usuário via Keycloak.
-
-```tsx
-const { login } = useAuth()
-await login('username', 'password')
-```
-
-### `logout(): Promise<void>`
-
-Faz logout do usuário.
-
-```tsx
-const { logout } = useAuth()
-await logout()
-```
-
-### `register(...): Promise<void>`
-
-Abre o formulário de registro do Keycloak.
-
-```tsx
-const { register } = useAuth()
-await register('username', 'email@example.com', 'password', 'First', 'Last')
-```
-
-### `refreshToken(): Promise<void>`
-
-Renova o token de autenticação.
-
-```tsx
-const { refreshToken } = useAuth()
-await refreshToken()
-```
-
-### `hasRole(role: string): boolean`
-
-Verifica se o usuário tem uma role específica.
-
-```tsx
-const { hasRole } = useAuth()
-if (hasRole('admin')) {
-  // ...
-}
-```
-
-### `hasRealmRole(role: string): boolean`
-
-Verifica se o usuário tem uma realm role específica.
-
-```tsx
-const { hasRealmRole } = useAuth()
-if (hasRealmRole('user')) {
-  // ...
-}
-```
-
-## 🚀 Setup do Keycloak Localmente
-
-### Com Docker
-
-```bash
-docker run -p 8080:8080 \
-  -e KEYCLOAK_ADMIN=admin \
-  -e KEYCLOAK_ADMIN_PASSWORD=admin \
-  quay.io/keycloak/keycloak:latest \
-  start-dev
-```
-
-Acesse em: `http://localhost:8080/admin`
-
-### Criar Realm e Client
-
-1. Crie um novo realm chamado `officinahub-realm`
-2. Crie um novo client chamado `officinahub-client`
-3. Configure as URLs de callback:
-   - Valid Redirect URIs: `http://localhost:5173/*`
-   - Valid post logout redirect URIs: `http://localhost:5173`
-   - Web Origins: `http://localhost:5173`
-
-## 📖 Referências
-
-- [Keycloak Documentation](https://www.keycloak.org/documentation)
-- [React Keycloak](https://react-keycloak.github.io/)
-- [Keycloak JavaScript Adapter](https://www.keycloak.org/docs/latest/securing_apps/#_javascript_adapter)
+- https://clerk.com/docs/cli
+- https://clerk.com/docs/js-frontend/getting-started/quickstart
+- https://clerk.com/docs/reference/components/overview

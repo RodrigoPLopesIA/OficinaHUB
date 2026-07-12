@@ -1,10 +1,18 @@
+import { UserButton, useUser } from '@clerk/react'
 
-import { useKeycloak } from '@react-keycloak/web/lib/useKeycloak';
 export function Dashboard() {
-    const { keycloak } = useKeycloak();
+  const { user } = useUser()
+
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-slate-950 text-white">
-      <h1 className="text-4xl font-bold">Dashboard {keycloak.tokenParsed?.preferred_username}</h1>
+    <div className="min-h-screen bg-slate-950 text-white px-6 py-10">
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-8 flex items-center justify-between">
+          <h1 className="text-4xl font-bold">
+            Dashboard {user?.firstName || user?.username || user?.primaryEmailAddress?.emailAddress || ''}
+          </h1>
+          <UserButton />
+        </div>
+      </div>
     </div>
   )
 }
