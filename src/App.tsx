@@ -1,21 +1,32 @@
+import { ReactKeycloakProvider } from '@react-keycloak/web'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { keycloak, keycloakInitOptions } from './config/keycloak'
+import { AuthProvider } from './contexts/AuthContext'
+import { PrivateRoute } from './components/PrivateRoute'
 import LandingPage from './pages/landing'
-import Login from './pages/auth/Login'
-import { Register } from './pages/auth/Register'
-import { ForgotPassword } from './pages/auth/ForgotPassword'
-import { VerificationCode } from './pages/auth/VerificationCode'
+import { Dashboard } from './pages/dashboard/Dashboard'
+import { Login } from './pages/auth/Login'
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/verification-code" element={<VerificationCode />} />
-      </Routes>
-    </BrowserRouter>
+    <ReactKeycloakProvider authClient={keycloak} initOptions={keycloakInitOptions}>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ReactKeycloakProvider>
   )
 }
 

@@ -1,6 +1,9 @@
+import { useKeycloak } from '@react-keycloak/web/lib/useKeycloak'
 import { Link } from 'react-router-dom'
 
 export default function Header() {
+
+  const { keycloak } = useKeycloak()
   return (
     <header className="bg-slate-950/95 sticky top-0 z-20 border-b border-slate-800 backdrop-blur-sm">
       <div className="mx-auto flex max-w-[1126px] items-center justify-between px-6 py-4">
@@ -15,12 +18,13 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Link
-            to="/login"
+          <button
+
+            onClick={() => keycloak.login()}
             className="rounded-2xl border border-slate-800 bg-slate-900 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-600 hover:bg-slate-800"
           >
             Cadastrar
-          </Link>
+          </button>
           <Link
             to="/login"
             className="rounded-2xl bg-purple-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-purple-500"
