@@ -1,18 +1,5 @@
 import { Link } from 'react-router-dom'
-
-const basicFeatures = [
-  'Cadastro de clientes e veículos',
-  'Ordens de serviço e histórico',
-  'Controle de estoque',
-  'Gestão financeira básica',
-]
-const proFeatures = [
-  'Tudo do Basic +',
-  'Relatórios avançados',
-  'Integração com Stripe',
-  'Comunicação via WhatsApp',
-  'Automação e multi-tenant',
-]
+import { pricingPlans } from '../../data/pricingPlans'
 
 export default function Pricing() {
   return (
@@ -28,57 +15,49 @@ export default function Pricing() {
         </div>
 
         <div className="mt-14 grid gap-6 lg:grid-cols-2">
-          <div className="flex h-full flex-col rounded-[32px] border border-slate-800 bg-slate-900 p-8 shadow-sm">
-            <span className="inline-flex rounded-full bg-slate-800 px-3 py-1 text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">
-              Basic
-            </span>
-            <p className="mt-8 text-4xl font-semibold text-white">R$ 99,99 / mês</p>
-            <p className="mt-4 text-slate-400 leading-7">
-              Essencial para controlar sua oficina com eficiência.
-            </p>
-            <ul className="mt-8 space-y-3 text-slate-300">
-              {basicFeatures.map((feature) => (
-                <li key={feature} className="list-disc pl-5 leading-7">
-                  {feature}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-auto">
-              <Link
-                to="/login"
-                className="inline-flex w-full items-center justify-center rounded-2xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-500"
-              >
-                Iniciar teste gratuito de 5 dias
-              </Link>
-            </div>
-          </div>
+          {pricingPlans.map((plan) => {
+            const isHighlighted = plan.highlighted
 
-          <div className="rounded-[32px] border border-slate-800 bg-slate-900 p-1 shadow-[0_24px_90px_rgba(0,0,0,0.35)]">
-            <div className="flex h-full flex-col rounded-[30px] bg-slate-950 p-8">
-              <span className="inline-flex rounded-full bg-purple-600/10 px-3 py-1 text-sm font-semibold uppercase tracking-[0.24em] text-purple-300">
-                Pro
-              </span>
-              <p className="mt-8 text-4xl font-semibold text-white">R$ 119,99 / mês</p>
-              <p className="mt-4 text-slate-400 leading-7">
-                Para oficinas que querem automação, integrações e crescimento.
-              </p>
-              <ul className="mt-8 mb-4 space-y-3 text-slate-300">
-                {proFeatures.map((feature) => (
-                  <li key={feature} className="list-disc pl-5 leading-7">
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-auto">
-                <Link
-                  to="/login"
-                  className="inline-flex w-full items-center justify-center rounded-2xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-500"
-                >
-                  Iniciar teste gratuito de 5 dias
-                </Link>
+            return (
+              <div
+                key={plan.name}
+                className={
+                  isHighlighted
+                    ? 'rounded-[32px] border border-slate-800 bg-slate-900 p-1 shadow-[0_24px_90px_rgba(0,0,0,0.35)]'
+                    : 'flex h-full flex-col rounded-[32px] border border-slate-800 bg-slate-900 p-8 shadow-sm'
+                }
+              >
+                <div className={isHighlighted ? 'flex h-full flex-col rounded-[30px] bg-slate-950 p-8' : undefined}>
+                  <span
+                    className={
+                      isHighlighted
+                        ? 'inline-flex rounded-full bg-purple-600/10 px-3 py-1 text-sm font-semibold uppercase tracking-[0.24em] text-purple-300'
+                        : 'inline-flex rounded-full bg-slate-800 px-3 py-1 text-sm font-semibold uppercase tracking-[0.24em] text-slate-400'
+                    }
+                  >
+                    {plan.name}
+                  </span>
+                  <p className="mt-8 text-4xl font-semibold text-white">{plan.price}</p>
+                  <p className="mt-4 text-slate-400 leading-7">{plan.description}</p>
+                  <ul className="mt-8 mb-4 space-y-3 text-slate-300">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="list-disc pl-5 leading-7">
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-auto">
+                    <Link
+                      to="/login"
+                      className="inline-flex w-full items-center justify-center rounded-2xl bg-purple-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-500"
+                    >
+                      {plan.ctaLabel}
+                    </Link>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            )
+          })}
         </div>
       </div>
     </section>
