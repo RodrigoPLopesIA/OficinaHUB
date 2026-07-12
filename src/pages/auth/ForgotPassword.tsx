@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 export function ForgotPassword() {
-    return (
-         <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center px-6 py-12">
+  const navigate = useNavigate();
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    // Aqui você pode adicionar a lógica para enviar o link de redefinição de senha
+
+    navigate("/verification-code"); // Redireciona para a página de código de verificação
+  }
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md rounded-[32px] bg-slate-900/95 p-8 shadow-[0_20px_60px_rgba(0,0,0,0.35)]">
         <div className="mb-8 text-center">
           <p className="text-sm uppercase tracking-[0.35em] text-purple-300">OficinaPro</p>
@@ -15,12 +23,12 @@ export function ForgotPassword() {
           </p>
         </div>
 
-        <form className="space-y-5">
-            <input
-              type="text"
-              placeholder="Celular, email, CPF ou CNPJ"
-              className=" w-full rounded-3xl border border-slate-800 bg-slate-950 px-4 py-4 text-slate-100 placeholder:text-slate-500 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
-            />
+        <form className="space-y-5" onSubmit={handleSubmit} role="form" aria-label="Redefinir senha">
+          <input
+            type="text"
+            placeholder="Celular, email, CPF ou CNPJ"
+            className=" w-full rounded-3xl border border-slate-800 bg-slate-950 px-4 py-4 text-slate-100 placeholder:text-slate-500 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500/20"
+          />
 
           <button
             type="submit"
@@ -40,5 +48,5 @@ export function ForgotPassword() {
         </form>
       </div>
     </div>
-    )
+  )
 }
