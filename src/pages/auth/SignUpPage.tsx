@@ -1,12 +1,13 @@
-import { SignIn } from '@clerk/react'
+import { SignUp } from '@clerk/react'
 
-export function Login() {
+export function SignUpPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center px-6 py-12">
-      <SignIn
+      <SignUp
+      
         routing="path"
-        path="/login"
-        signUpUrl="/sign-up"
+        path="/sign-up"
+        signInUrl="/login"
         forceRedirectUrl="/dashboard"
       />
     </div>
