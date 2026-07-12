@@ -5,10 +5,15 @@ import { Navigate } from 'react-router-dom'
 interface PrivateRouteProps {
   children: React.ReactNode
   requiredRoles?: string[]
+  requireOrganization?: boolean
 }
 
-export function PrivateRoute({ children, requiredRoles }: PrivateRouteProps) {
-  const { isLoaded, isSignedIn, sessionClaims } = useAuth()
+export function PrivateRoute({
+  children,
+  requiredRoles,
+  requireOrganization = true,
+}: PrivateRouteProps) {
+  const { isLoaded, isSignedIn, sessionClaims, orgId } = useAuth()
 
   const roles = Array.isArray((sessionClaims as Record<string, unknown> | undefined)?.roles)
     ? ((sessionClaims as Record<string, unknown>).roles as string[])
@@ -28,6 +33,10 @@ export function PrivateRoute({ children, requiredRoles }: PrivateRouteProps) {
 
   if (!isSignedIn) {
     return <Navigate to="/login" replace />
+  }
+
+  if (requireOrganization && !orgId) {
+    return <Navigate to="/oficina" replace />
   }
 
   if (requiredRoles && !requiredRoles.some((role) => hasRole(role))) {

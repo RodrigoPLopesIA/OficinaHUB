@@ -8,7 +8,7 @@ export function SignUpPage() {
         routing="path"
         path="/sign-up"
         signInUrl="/login"
-        forceRedirectUrl="/dashboard"
+        forceRedirectUrl="/oficina"
       />
     </div>
   )

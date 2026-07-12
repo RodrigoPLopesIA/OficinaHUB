@@ -8,10 +8,20 @@ vi.mock('@clerk/react', () => ({
 	UserButton: () => null,
 	SignIn: () => null,
 	SignUp: () => null,
+	OrganizationSwitcher: () => null,
+	CreateOrganization: () => null,
 	useAuth: () => ({
 		isLoaded: true,
 		isSignedIn: false,
+		orgId: null,
 		sessionClaims: {},
+	}),
+	useOrganizationList: () => ({
+		isLoaded: true,
+		setActive: vi.fn(),
+		userMemberships: {
+			data: [],
+		},
 	}),
 	useUser: () => ({
 		user: {

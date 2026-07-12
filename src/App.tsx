@@ -4,6 +4,8 @@ import LandingPage from './pages/landing'
 import { Dashboard } from './pages/dashboard/Dashboard'
 import { Login } from './pages/auth/Login'
 import { SignUpPage } from './pages/auth/SignUpPage'
+import { OficinaWorkspace } from './pages/oficina/OficinaWorkspace'
+import { CriarOficinaPage } from './pages/oficina/CriarOficinaPage'
 import {
   BudgetsManagementPage,
   ClientsManagementPage,
@@ -25,6 +27,22 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<SignUpPage />} />
+        <Route
+          path="/oficina"
+          element={
+            <PrivateRoute requireOrganization={false}>
+              <OficinaWorkspace />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/oficina/criar"
+          element={
+            <PrivateRoute requireOrganization={false}>
+              <CriarOficinaPage />
+            </PrivateRoute>
+          }
+        />
         <Route
           path="/dashboard"
           element={

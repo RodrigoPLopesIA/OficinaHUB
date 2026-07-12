@@ -7,7 +7,7 @@ export function Login() {
         routing="path"
         path="/login"
         signUpUrl="/sign-up"
-        forceRedirectUrl="/dashboard"
+        forceRedirectUrl="/oficina"
       />
     </div>
   )

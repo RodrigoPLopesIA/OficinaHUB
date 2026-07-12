@@ -22,13 +22,13 @@ export default function Header() {
         <div className="flex items-center gap-3">
           {showSignedOut ? (
             <>
-              <SignUpButton mode="redirect" fallbackRedirectUrl="/dashboard" signInFallbackRedirectUrl="/dashboard">
+              <SignUpButton mode="redirect" fallbackRedirectUrl="/oficina" signInFallbackRedirectUrl="/oficina">
                 <button className="rounded-2xl border border-slate-800 bg-slate-900 px-5 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-600 hover:bg-slate-800">
                   Cadastrar
                 </button>
               </SignUpButton>
 
-              <SignInButton mode="redirect" fallbackRedirectUrl="/dashboard" signUpFallbackRedirectUrl="/dashboard">
+              <SignInButton mode="redirect" fallbackRedirectUrl="/oficina" signUpFallbackRedirectUrl="/oficina">
                 <button className="rounded-2xl bg-purple-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-purple-500">
                   Iniciar teste gratuito de 5 dias
                 </button>
