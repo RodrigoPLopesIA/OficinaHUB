@@ -23,7 +23,7 @@ export function ForgotPassword() {
           </p>
         </div>
 
-        <form className="space-y-5" onSubmit={handleSubmit}>
+        <form className="space-y-5" onSubmit={handleSubmit} role="form" aria-label="Redefinir senha">
           <input
             type="text"
             placeholder="Celular, email, CPF ou CNPJ"
