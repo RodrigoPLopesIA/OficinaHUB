@@ -4,6 +4,19 @@ import LandingPage from './pages/landing'
 import { Dashboard } from './pages/dashboard/Dashboard'
 import { Login } from './pages/auth/Login'
 import { SignUpPage } from './pages/auth/SignUpPage'
+import {
+  BudgetsManagementPage,
+  ClientsManagementPage,
+  FinancialManagementPage,
+  InventoryManagementPage,
+  MechanicsManagementPage,
+  ReportsManagementPage,
+  ScheduleManagementPage,
+  ServicesManagementPage,
+  SettingsManagementPage,
+  VehiclesManagementPage,
+  WorkOrdersManagementPage,
+} from './pages/management'
 
 function App() {
   return (
@@ -17,6 +30,94 @@ function App() {
           element={
             <PrivateRoute>
               <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/clientes"
+          element={
+            <PrivateRoute>
+              <ClientsManagementPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/veiculos"
+          element={
+            <PrivateRoute>
+              <VehiclesManagementPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/orcamentos"
+          element={
+            <PrivateRoute>
+              <BudgetsManagementPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/servicos"
+          element={
+            <PrivateRoute>
+              <ServicesManagementPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/mecanicos"
+          element={
+            <PrivateRoute>
+              <MechanicsManagementPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/ordens-servico"
+          element={
+            <PrivateRoute>
+              <WorkOrdersManagementPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/estoque"
+          element={
+            <PrivateRoute>
+              <InventoryManagementPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/agenda"
+          element={
+            <PrivateRoute>
+              <ScheduleManagementPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/financeiro"
+          element={
+            <PrivateRoute>
+              <FinancialManagementPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/relatorios"
+          element={
+            <PrivateRoute>
+              <ReportsManagementPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/dashboard/configuracoes"
+          element={
+            <PrivateRoute>
+              <SettingsManagementPage />
             </PrivateRoute>
           }
         />
