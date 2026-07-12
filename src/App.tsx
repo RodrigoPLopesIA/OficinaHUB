@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { PrivateRoute } from './components/PrivateRoute'
 import LandingPage from './pages/landing'
-import Login from './pages/auth/Login'
-import { Register } from './pages/auth/Register'
-import { ForgotPassword } from './pages/auth/ForgotPassword'
-import { VerificationCode } from './pages/auth/VerificationCode'
+import { Dashboard } from './pages/dashboard/Dashboard'
+import { Login } from './pages/auth/Login'
+import { SignUpPage } from './pages/auth/SignUpPage'
 
 function App() {
   return (
@@ -11,9 +11,15 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/verification-code" element={<VerificationCode />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   )
