@@ -76,6 +76,27 @@ describe('Dashboard', () => {
     expect(newClientAction).toBeInTheDocument()
   })
 
+  it('shows upgrade modal with available plans when subscription is not in good standing', () => {
+    render(
+      <MemoryRouter>
+        <Dashboard />
+      </MemoryRouter>,
+    )
+
+    act(() => {
+      vi.advanceTimersByTime(1000)
+    })
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    expect(screen.getByText(/assinatura necessária/i)).toBeInTheDocument()
+    expect(screen.getByText(/faça upgrade para continuar com todos os recursos/i)).toBeInTheDocument()
+
+    expect(screen.getByText('Basic')).toBeInTheDocument()
+    expect(screen.getByText('Pro')).toBeInTheDocument()
+
+    expect(screen.getAllByRole('button', { name: /iniciar teste gratuito de 5 dias/i })).toHaveLength(2)
+  })
+
   it('renders error state when query param is set and allows retry', () => {
     window.history.pushState({}, '', '/dashboard?dashboardError=1')
 

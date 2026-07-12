@@ -6,10 +6,10 @@ import {
   Bell,
   CalendarDays,
   Car,
-  ChevronDown,
+  Check,
   ChevronRight,
   ClipboardList,
-  Cog,
+  Crown,
   CreditCard,
   FileText,
   HelpCircle,
@@ -41,16 +41,13 @@ import { Button } from '../../components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card'
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../../components/ui/dropdown-menu'
 import { Input } from '../../components/ui/input'
 import { Skeleton } from '../../components/ui/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../components/ui/tooltip'
+import { pricingPlans } from '../../data/pricingPlans'
 
 const menuItems = [
   { label: 'Dashboard', icon: LayoutDashboard, href: '/dashboard' },
@@ -264,6 +261,79 @@ function FinancialMetric({ label, value, tone }: FinancialMetricProps) {
   )
 }
 
+function BillingUpgradeModal({ isOpen }: { isOpen: boolean }) {
+  if (!isOpen) return null
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="billing-upgrade-title"
+    >
+      <Card className="max-h-[92vh] w-full max-w-5xl overflow-y-auto border-purple-500/40 bg-slate-900">
+        <CardHeader>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <Badge variant="warning" className="mb-3">
+                Assinatura necessária
+              </Badge>
+              <h2 id="billing-upgrade-title" className="text-2xl font-bold text-white">
+                Faça upgrade para continuar com todos os recursos
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm text-slate-300">
+                Seu plano atual nao cobre esta operacao ou o pagamento esta pendente. Escolha um plano abaixo para
+                regularizar sua assinatura e manter o sistema ativo.
+              </p>
+            </div>
+
+            <div className="rounded-xl bg-purple-600/10 p-3 text-purple-300">
+              <Crown className="h-6 w-6" />
+            </div>
+          </div>
+        </CardHeader>
+
+        <CardContent>
+          <div className="grid gap-4 md:grid-cols-3">
+            {pricingPlans.map((plan) => (
+              <div
+                key={plan.name}
+                className={`rounded-2xl border p-4 ${
+                  plan.highlighted
+                    ? 'border-purple-500 bg-purple-600/10 shadow-[0_0_0_1px_rgba(168,85,247,0.25)]'
+                    : 'border-slate-800 bg-slate-950/60'
+                }`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-base font-semibold text-white">{plan.name}</p>
+                  {plan.highlighted ? <Badge variant="info">Mais recomendado</Badge> : null}
+                </div>
+                <p className="mt-3 text-xl font-bold text-white">{plan.price}</p>
+                <p className="mt-2 text-sm text-slate-300">{plan.description}</p>
+
+                <ul className="mt-4 space-y-2">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2 text-sm text-slate-200">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Link to="/dashboard/configuracoes" className="mt-5 block">
+                  <Button className="w-full" variant={plan.highlighted ? 'default' : 'outline'}>
+                    {plan.ctaLabel}
+                  </Button>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
+
 export function Dashboard() {
   const { user } = useUser()
   const [isLoading, setIsLoading] = useState(true)
@@ -276,6 +346,16 @@ export function Dashboard() {
     const timeout = setTimeout(() => setIsLoading(false), 900)
     return () => clearTimeout(timeout)
   }, [])
+
+  const metadataPlan = user?.publicMetadata?.['plan']
+  const metadataPaymentStatus = user?.publicMetadata?.['paymentStatus']
+
+  const userPlan = typeof metadataPlan === 'string' ? metadataPlan.toLowerCase() : 'free'
+  const paymentStatus = typeof metadataPaymentStatus === 'string' ? metadataPaymentStatus.toLowerCase() : 'unpaid'
+
+  const hasPaidPlan = userPlan !== 'free' && userPlan !== 'gratuito'
+  const hasPaymentInGoodStanding = paymentStatus === 'active' || paymentStatus === 'paid'
+  const showUpgradeModal = !hasPaidPlan || !hasPaymentInGoodStanding
 
   const bestMechanic = mechanicsProductivity[0]
 
@@ -304,11 +384,10 @@ export function Dashboard() {
                 <Link
                   key={item.label}
                   to={item.href}
-                  className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
-                    active
+                  className={`group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${active
                       ? 'bg-purple-600/10 text-purple-200'
                       : 'text-slate-300 hover:bg-slate-800 hover:text-white'
-                  }`}
+                    }`}
                 >
                   <Icon className="h-4 w-4" />
                   <span>{item.label}</span>
@@ -363,41 +442,21 @@ export function Dashboard() {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button className="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-900 px-3 py-2 transition hover:bg-slate-900">
-                      <img
-                        src={user?.imageUrl || 'https://api.dicebear.com/7.x/initials/svg?seed=OP'}
-                        alt="Foto do usuário"
-                        className="h-8 w-8 rounded-full object-cover"
-                      />
                       <div className="hidden text-left sm:block">
                         <p className="text-sm font-semibold text-white">
                           {user?.fullName || user?.firstName || 'Usuário'}
                         </p>
                         <p className="text-xs text-slate-400">Administrador</p>
                       </div>
-                      <ChevronDown className="h-4 w-4 text-slate-400" />
+                      <UserButton />
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <LayoutDashboard className="mr-2 h-4 w-4" />
-                      Meu painel
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Cog className="mr-2 h-4 w-4" />
-                      Preferências
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="justify-between">
-                      <span>Perfil</span>
-                      <UserButton />
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
                 </DropdownMenu>
               </div>
             </div>
           </header>
+
+          <BillingUpgradeModal isOpen={showUpgradeModal} />
 
           <div className="space-y-6 px-4 py-5 md:px-6 lg:px-8">
             <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
